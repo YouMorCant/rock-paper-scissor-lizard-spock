@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Goldman&display=swap');
 
 html {
   box-sizing: border-box;
@@ -7,18 +7,26 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-
-  font-family: Lato, sans-serif;
+  background: whitesmoke;
+  font-family: Goldman, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-
+.game-container {
+  width: 530px;
+  height: 600px;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 10px 10px 20px -5px rgba(0, 0, 0, 0.5);
+}
 
 .header {
   background: dodgerblue;
-
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,7 +34,7 @@ body {
 
 h1 {
   color: white;
-  font-size: 30px;
+  font-size: 28px;
 }
 
 .player-container {
@@ -43,7 +51,25 @@ h2 {
   User-select: none;
 }
 
+#player .far,
+#player .choice {
+  color: dodgerblue;
+  cursor: pointer;
+}
 
+#computer .far,
+#computer .choice {
+  color: rgb(255, 30, 105);
+}
+
+#player .far:last-of-type,
+#computer .far:last-of-type {
+  margin-right: 0;
+}
+
+.selected {
+  color: black !important;
+}
 
 .reset-icon {
   font-size: 30px;
@@ -66,12 +92,16 @@ h2 {
 /* Media Query: Large Smartphone (Vertical) */
 @media screen and (max-width: 600px) {
   .game-container {
-
+    width:95%;
     height: 580px;
   }
 
   h1 {
-    font-size: 24px;
+    font-size: 18px;
+  }
+
+  h2 {
+    font-size: 17px;
   }
 
   .player-container {
@@ -80,22 +110,29 @@ h2 {
 
   .far {
     margin-right: 20px;
+    font-size: 40px;
   }
 
   .reset-icon {
     margin-top: 25px;
     margin-left: 25px;
+    font-size: 28px;
   }
 }
 
 /* Media Query: iPhone (Vertical) */
-@media screen and (max-width: 376px) {
+@media screen and (max-width: 320px) {
   .game-container {
+    width: 95%;
     height: 550px;
   }
 
   h1 {
-    font-size: 22px;
+    font-size: 16px;
+  }
+
+  h2 {
+    font-size: 15px;
   }
 
   .player-container {
@@ -103,14 +140,16 @@ h2 {
   }
 
   .far {
-    font-size: 43px;
+    font-size: 30px;
   }
 
   .reset-icon {
     margin-top: 15px;
+    font-size: 20px;
   }
 
   .result-container {
     margin: 0 20px;
+    font-size: 18px;
   }
 }
