@@ -1,3 +1,5 @@
+import { startConfetti, stopConfetti } from './confetti.js';
+
 // Text Elements
 const playerScoreEl = document.getElementById('playerScore');
 const playerChoiceEl = document.getElementById('playerChoice');
@@ -30,6 +32,8 @@ const choices = {
   spock: { name: 'Spock', defeats: ['scissors', 'rock'] },
 };
 
+let playerScoreNumber = 0;
+let computerScoreNumber = 0;
 let computerChoice = '';
 
 // Reset all "selected icons"
@@ -37,7 +41,30 @@ function resetSelected(){
   allGameIcons.forEach((icon) => {
     icon.classList.remove('selected');
   });
+  stopConfetti();
 }
+
+// Resets scores, choices and selections
+function resetAll() {
+  //reset selections
+  resetSelected();
+  
+  //reset scores
+  playerScoreNumber = 0;
+  computerScoreNumber = 0;
+  playerScoreEl.textContent = playerScoreNumber;
+  computerScoreEl.textContent = computerScoreNumber;
+  
+  // reset choices
+  computerChoice = '';
+  computerChoiceEl.textContent = '';
+  playerChoiceEl.textContent = '';
+
+  // reset result text
+  resultText.textContent = '';
+}
+//passes function to window object so onclick will work
+window.resetAll = resetAll;
 
 // Random choice selector
 function computerRandomChoice (){
@@ -53,7 +80,6 @@ function computerRandomChoice (){
   }else{
     computerChoice = 'spock';
   }
-  console.log(computerChoice);
 }
 
 // Add Selected styling and computer choice
@@ -89,16 +115,37 @@ function displayComputerChoice(){
   }
 }
 
+// check result, update scores and result text
+function updateScore(playerChoice){
+  // check for tie
+  if (playerChoice===computerChoice){
+    resultText.textContent = "It's a tie.";
+  }else {
+    const choice = choices[playerChoice];
+    if (choice.defeats.indexOf(computerChoice)> -1){
+      resultText.textContent = "You Won!";
+      playerScoreNumber ++;
+      playerScoreEl.textContent = playerScoreNumber;
+      startConfetti();
+    }else{
+      resultText.textContent = "You lost.";
+      computerScoreNumber ++;
+      computerScoreEl.textContent = computerScoreNumber;
+    }
+  }
+}
+
 //Check who won
-function checkResult (){
+function checkResult (playerChoice){
     resetSelected();
     computerRandomChoice();
     displayComputerChoice();
+    updateScore(playerChoice);
 }
 
 // Passing player selection value and style icons
 function select(playerChoice){
-  checkResult();
+  checkResult(playerChoice);
 
   // Add selected styling to player choice
   switch (playerChoice){
@@ -131,3 +178,7 @@ function select(playerChoice){
       break;                                 
   }
 }
+window.select = select;
+
+//on load
+resetAll();
